@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)_f)4d&cj&tsno8=l2@@6a)h1mkq6fsdnflh3+isyohe_i8uo4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['moments-social-book.herokuapp.com']
 
 
 # Application definition
@@ -75,12 +75,25 @@ WSGI_APPLICATION = 'social_book.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd933r3kjukcnhh',
+        'USER': 'nlyrymsbrqsjks',
+        'PASSWORD': '01071da67f623fbdead303d668449caabb80a29a098cadd57e1225878e5271a7',
+        'HOST': 'ec2-3-219-52-220.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
+
+
 
 
 # Password validation
