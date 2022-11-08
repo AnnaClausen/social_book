@@ -10,48 +10,121 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 	<title>Profile - {{user_profile.user.username}}</title>
-   <!-- <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> -->
+   <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
     
     <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/color.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 
 </head>
 <body>
-<!--<div class="se-pre-con"></div>-->
-<div class="theme-layout">
+	<header>
+		<div class="header_inner">
+			<div id="logo">
+			<img src="{% static 'images/moments-logo.svg' %}" alt="logo" />
+			</div>
+			<div>
+			<form class="search-form" action="/search" method="POST">
+			{% csrf_token %}
+			<div class="left-side input-with-icon">
+				<input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
+				<button type="submit" class="button"><i class="fa fa-search fa-1x"></i></button>
+			</div>
+			</form>
+			</div>
+			<div class="right-side">
+				
+				 <!-- upload -->
+				<a href="#" class="button">Upload</a>
+					 
+				<!-- upload dropdown box -->
+				<div uk-dropdown="pos: top-right;mode:click ; animation: uk-animation-slide-bottom-small" class="header_dropdown">
+
+					<!-- notivication header -->
+					<div class="notification-header">
+						<h4>Upload</h4>
+					</div>
+
+					<!-- notification contents -->
+				
+					
+
+					<div>
+
+						<form action="upload" method="POST" enctype="multipart/form-data">
+						{% csrf_token %}
+							<div>
+								<input type="file" name="image_upload">
+								<!-- <a href="#" class="button soft-warning small"> Choose file</a> -->
+								<textarea name="caption"class="button soft-warning" placeholder="Enter caption here..."></textarea>
+								<br>
+								<button type="submit" class="button">Upload</button>
+							</div>
+						</form>
+
+					</div>
+					
+				</div>
+
+				<!-- profile -->
+
+				<a href="#">
+					<img src="{{user_profile.profileimg.url}}" class="header-avatar" alt="">
+				</a>
+				<div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown">
+					<ul>
+						<li><a href="/settings"> Account settings </a> </li>
+						<li><a href="/logout"> Log Out</a></li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</header>
+
 	
-	</div>
 	
-	<section>
+		<section>
 			<div class="feature-photo">
 				<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
 				<form action="/follow" method="POST">
 					{% csrf_token %}
 					<div class="add-btn">
-					<span style="color: white; font-size: 27px; margin-right: 520px;"><b><u><a href="/">Home</a></u></b></span>
-					{% if user_post_length == 1 %}
-					<span style="color: white; font-size: 27px;"><b>{{user_post_length}} Post</b></span>
+					
+					{% if user_post_length == 0 %}
+					<span><b>No Posts</b></span>
+					{% elif user_post_length == 1 %}
+					<span><b>{{user_post_length}} Post</b></span>
 					{% else %}
-					<span style="color: white; font-size: 27px;"><b>{{user_post_length}} Posts</b></span>
+					<span><b>{{user_post_length}} Posts</b></span>
 					{% endif %}
-
 
 					{% if user_followers == 0 or user_followers == 1 %}
-					<span style="color: white; font-size: 27px;"><b>{{user_followers}} follower</b></span>
+					<span><b>{{user_followers}} followers</b></span>
 					{% else %}
-					<span style="color: white; font-size: 27px;"><b>{{user_followers}} followers</b></span>
+					<span><b>{{user_followers}} followers</b></span>
 					{% endif %}
-					
+
+
+					<span><b>{{user_following}} following</b></span>
+
 					<input type="hidden" value="{{user.username}}" name="follower" />
 					<input type="hidden" value="{{user_object.username}}" name="user" />
-					
+
 					{% if user_object.username == user.username %}
-					<a href="/settings" data-ripple="">Account Settings</a>
+					
+					<a href="/settings" data-ripple=""><button>Account Settings</button></a>
+					
 					{% else %}
-					<a data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">{{button_text}}</button></a>
+					
+					<a data-ripple=""><button type="submit">{{button_text}}</button></a>
+				
 					{% endif %}
+
 					</div>
 				</form>
 
@@ -81,7 +154,7 @@
 							<div class="timeline-info">
 								<ul>
 									<li class="admin-name">
-									  <h5 style="color: black;white-space: nowrap; width: 110px; font-size: 27px;"><b>{{user_profile.user.username}}</b><!--<i class="fa fa-check-circle" style="color: #48dbfb;" aria-hidden="true"></i>--></h5>
+									  <h5 class="pt-4"style="color: black;white-space: nowrap; width: 110px; font-size: 27px;"><b>{{user_profile.user.username}}'s profile</b><!--<i class="fa fa-check-circle" style="color: #48dbfb;" aria-hidden="true"></i>--></h5>
 									  <!--<span>Group Admin</span>-->
 									</li>
 									<!--<li>
@@ -113,8 +186,8 @@
 			</div>
 		</section>
 		
-	<section>
-		<div class="gap gray-bg">
+		<section>
+			<div class="gap gray-bg">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
@@ -170,6 +243,9 @@
 	
 	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="{% static 'js/main.min.js' %}"></script>
 	<script src="{% static 'js/script.js' %}"></script>
+	<script src="{% static 'assets/js/uikit.js' %}"></script>
+
+	<script src="{% static '../../unpkg.com/ionicons%405.2.3/dist/ionicons.js' %}"></script>
 
 </body>	
 
