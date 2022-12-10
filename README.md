@@ -1,6 +1,8 @@
 # social_book
 
-https://user-images.githubusercontent.com/102702166/206814540-6f3f6cc7-e484-4b6f-976a-54120200f492.mp4
+
+https://user-images.githubusercontent.com/102702166/206825561-2c766e7d-c680-4d77-86ba-5678f06fdcb9.mp4
+
 
 ## Features
 1. Users can sign up for an account with a password and create a profile.
